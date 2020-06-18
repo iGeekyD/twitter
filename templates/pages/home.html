@@ -6,4 +6,18 @@ Dmitry Filin (C)
 
 {% block content %}
 Welcome to twitter
+
+<script>
+    const xhr = new XMLHttpRequest() 
+    const method = 'GET' // POST
+    const url = '/tweets'
+    const responseType = 'json'
+
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function () {
+        console.log(xhr.response)
+    }
+    xhr.send()
+</script>
 {% endblock content %}
