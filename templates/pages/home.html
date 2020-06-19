@@ -8,19 +8,16 @@ Dmitry Filin (C)
 Welcome to twitter
 
 <div id='tweets'>
-    Replace me
+    Loading...
 </div>
 
 <script>
     const tweetsElement = document.getElementById("tweets")
-    tweetsElement.innerHTML = 'Loading...'
 
-    var el1 = "<h1>Hi there 1 </h1>"
-    var el2 = "<h1>Hi there 2 </h1>"
-    var el3 = "<h1>Hi there 3 </h1>"
-
-    tweetsElement.innerHTML = el1 + el2 + el3
-
+    function formatTweetElement(tweet) {
+        let formattedTweet = "<div class='mb-4 tweet' id='tweet-" + tweet.id + "'>" + "<p>" + tweet.content + "</p></div>"
+        return formattedTweet
+    }
     const xhr = new XMLHttpRequest() 
     const method = 'GET' // POST
     const url = '/tweets'
@@ -30,8 +27,14 @@ Welcome to twitter
     xhr.open(method, url)
     xhr.onload = function () {
         const serverResponse = xhr.response 
-        let listedItems = serverResponse.response
-        console.log(listedItems)
+        const listedItems = serverResponse.response
+        let finalTweetStr = ""
+        for (let i = 0; i < listedItems.length; i++) {
+            let tweetObj = listedItems[i]
+            let currentItem = formatTweetElement(tweetObj)
+            finalTweetStr += currentItem
+        }
+        tweetsElement.innerHTML = finalTweetStr
     }
     xhr.send()
 </script>
