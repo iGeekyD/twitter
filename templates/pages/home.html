@@ -7,7 +7,20 @@ Dmitry Filin (C)
 {% block content %}
 Welcome to twitter
 
+<div id='tweets'>
+    Replace me
+</div>
+
 <script>
+    const tweetsElement = document.getElementById("tweets")
+    tweetsElement.innerHTML = 'Loading...'
+
+    var el1 = "<h1>Hi there 1 </h1>"
+    var el2 = "<h1>Hi there 2 </h1>"
+    var el3 = "<h1>Hi there 3 </h1>"
+
+    tweetsElement.innerHTML = el1 + el2 + el3
+
     const xhr = new XMLHttpRequest() 
     const method = 'GET' // POST
     const url = '/tweets'
@@ -16,7 +29,9 @@ Welcome to twitter
     xhr.responseType = responseType
     xhr.open(method, url)
     xhr.onload = function () {
-        console.log(xhr.response)
+        const serverResponse = xhr.response 
+        let listedItems = serverResponse.response
+        console.log(listedItems)
     }
     xhr.send()
 </script>
