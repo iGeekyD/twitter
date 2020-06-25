@@ -23,4 +23,5 @@ urlpatterns = [
     path('', home_view),
     path('tweets/<int:tweet_id>', tweet_detail_view), #in views providing *args and **kwargs interface makes possible to use such a construction
     path('tweets', tweet_list_view),
+    path('create-tweet', tweet_create_view),
 ]

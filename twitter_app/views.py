@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from .models import Tweet
+from .forms import TweetForm
 
 from random import randint
 # Create your views here.
@@ -16,6 +17,15 @@ def tweet_list_view (request, *args, **kwargs):
         "response" : tweets_list
     }
     return JsonResponse(data=data, status=200)
+
+def tweet_create_view(request, *args, **kwargs):
+    form = TweetForm(request.POST or None) # When the QueryDict request.POST is empty, it takes a Falsy value
+    if form.is_valid():
+        obj = form.save(commit=False) #to modify obj later and not dump it right now
+        # do other form related logic
+        obj.save()
+        form = TweetForm() # to return blank form after request handle
+    return render(request=request, template_name="components/form.html", context={"form": form})
 
 def tweet_detail_view(request, tweet_id, *args, **kwargs):
     data = {
