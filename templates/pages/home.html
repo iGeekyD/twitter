@@ -5,17 +5,34 @@ Dmitry Filin (C)
 {% endblock head_title %}
 
 {% block content %}
-Welcome to twitter
+<div class='row text-center'>
+    <div class='col'>
+        <h1>Welcome to twitter</h1>
+    </div>
+</div>
 
-<div id='tweets'>
+
+<div class='row' id='tweets'>
     Loading...
 </div>
 
 <script>
     const tweetsElement = document.getElementById("tweets")
 
+    function handleLike(tweet_id, currentCount) {
+        console.log(tweet_id, currentCount)
+        currentCount++
+        return
+    }
+
+    function likeBtn(tweet) {
+        return "<button class='btn-primary' onclick=handleLike(" + tweet.id + "," + tweet.likes + ")>" + tweet.likes + " Like </button>"
+    }
+
     function formatTweetElement(tweet) {
-        let formattedTweet = "<div class='mb-4 tweet' id='tweet-" + tweet.id + "'>" + "<p>" + tweet.content + "</p></div>"
+        let formattedTweet = "<div class='col-12 border py-3 mb-4 tweet' id='tweet-" + tweet.id + "'>" +
+        "<p>" + tweet.content + "</p>" +
+        "<div class='btn-group'>" + likeBtn(tweet) + "</p></div></div>"
         return formattedTweet
     }
     const xhr = new XMLHttpRequest() 
