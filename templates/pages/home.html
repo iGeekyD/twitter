@@ -10,18 +10,18 @@ Dmitry Filin (C)
         <h1>Welcome to twitter</h1>
     </div>
 </div>
-
+<!--FORM FOR TWEET CREATION-->
 <div class='row'>
     <div class='col-md-4 mx-auto col-10'>
         <form class='form' method='POST' action='/create-tweet'>
             {% csrf_token %}
-            <input type='hidden' value='/' name='next'/>
+            <input type='hidden' value='https://google.com' name='next'/>
             <textarea class="form-control" name='content' placeholder="Your tweet"> </textarea>
             <button class="btn btn-primary" type="submit">Tweet</button> 
         </form>
     </div>
 </div>
-
+<!--END OF FORM-->
 <div class='row' id='tweets'>
     Loading...
 </div>
