@@ -15,7 +15,7 @@ Dmitry Filin (C)
     <div class='col-md-4 mx-auto col-10'>
         <form class='form' method='POST' action='/create-tweet'>
             {% csrf_token %}
-            <input type='hidden' value='https://google.com' name='next'/>
+            <input type='hidden' value='/' name='next'/>
             <textarea class="form-control" name='content' placeholder="Your tweet"> </textarea>
             <button class="btn btn-primary" type="submit">Tweet</button> 
         </form>
@@ -45,24 +45,28 @@ Dmitry Filin (C)
         "<div class='btn-group'>" + likeBtn(tweet) + "</p></div></div>"
         return formattedTweet
     }
-    const xhr = new XMLHttpRequest() 
-    const method = 'GET' // POST
-    const url = '/tweets'
-    const responseType = 'json'
 
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function () {
-        const serverResponse = xhr.response 
-        const listedItems = serverResponse.response
-        let finalTweetStr = ""
-        for (let i = 0; i < listedItems.length; i++) {
-            let tweetObj = listedItems[i]
-            let currentItem = formatTweetElement(tweetObj)
-            finalTweetStr += currentItem
+    //FUNCTION TO GET TWEETS FROM THE SERVER
+    function loadTweets(tweetsElement) {
+        const xhr = new XMLHttpRequest() 
+
+        xhr.responseType = 'json'
+        xhr.open('GET', '/tweets')
+        xhr.onload = function () {
+            const serverResponse = xhr.response 
+            const listedItems = serverResponse.response
+            let finalTweetStr = ""
+            for (let i = 0; i < listedItems.length; i++) {
+                let tweetObj = listedItems[i]
+                let currentItem = formatTweetElement(tweetObj)
+                finalTweetStr += currentItem
+            }
+            tweetsElement.innerHTML = finalTweetStr
         }
-        tweetsElement.innerHTML = finalTweetStr
+        xhr.send()
     }
-    xhr.send()
+    //END OF FUNCTION
+
+    loadTweets(tweetsElement)
 </script>
 {% endblock content %}
